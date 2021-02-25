@@ -1,18 +1,16 @@
 from task import get_handler as get
-
+from pprint import pprint
 
 def handle(args):
-    resultSet = list(get.handle(args))[0]
-    keys = resultSet.keys()
-    contents = resultSet.values()
+    resultSet = list(get.handle(args))
+    keys = resultSet[0].keys()
 
-    print()
     for key in keys:
         print(key, end=" "*8)
     print()
     print("-"*30)
 
-    for item in contents:
-        print(item, end=" "*9)
+    for item in resultSet:
+        pprint((list(item.values())))
     print()
     return ""
