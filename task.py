@@ -8,11 +8,11 @@ if __name__ == "__main__":
     sub_parser = parser.add_subparsers()
 
     find_parser = sub_parser.add_parser('add', help='Insert task to TaskList. If priority is omitted, priority medium is set.')
-    find_parser.add_argument('-t', '--taskName')
+    find_parser.add_argument('-t', '--taskName', required=True)
     find_parser.set_defaults(func=add_handler.handle)
 
     emboss_parser = sub_parser.add_parser('done', help='Done to task')
-    emboss_parser.add_argument('-i', '--id', type=str)
+    emboss_parser.add_argument('-i', '--id', required=True)
     emboss_parser.set_defaults(func=done_handler.handle)
 
     status_parser = sub_parser.add_parser('show', help='show taskList')
