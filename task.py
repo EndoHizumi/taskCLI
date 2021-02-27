@@ -18,8 +18,11 @@ if __name__ == "__main__":
 
     add_parser = sub_parser.add_parser('add', help='Insert task to TaskList. If priority is omitted, priority medium is set.')
     add_parser.add_argument('-t', '--taskName', type=str, required=True)
+    add_parser.add_argument('-p', '--project', type=str, default='')
+    add_parser.add_argument('-c', '--context', type=str, default='')
     add_parser.add_argument('-s', '--startDay', type=validate_date, help='date input format %%Y/%%m/%%d %%H:%%M:%%S')
     add_parser.add_argument('-e', '--endDay', type=validate_date, help='date input format %%Y/%%m/%%d %%H:%%M:%%S')
+    add_parser.add_argument('-i', '--importance', type=str, default='C', choices=['A', 'B', 'C', 'D', 'E'])
     add_parser.set_defaults(func=add_handler.handle)
 
     done_parser = sub_parser.add_parser('done', help='Done to task')
