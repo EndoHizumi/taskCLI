@@ -12,6 +12,7 @@ def validate_date(arg_date):
         msg = f"Not a valid date: '{arg_date}'."
         raise argparse.ArgumentTypeError(msg)
 
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     sub_parser = parser.add_subparsers()
@@ -26,6 +27,7 @@ if __name__ == "__main__":
     add_parser.set_defaults(func=add_handler.handle)
 
     done_parser = sub_parser.add_parser('done', help='Done to task')
+    done_parser.add_argument('id')
     done_parser.set_defaults(func=done_handler.handle)
 
     show_parser = sub_parser.add_parser('show', help='show taskList')
