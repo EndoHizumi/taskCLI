@@ -3,3 +3,4 @@
 .DS_Store
 task.sh
 .venv
+taskList*
