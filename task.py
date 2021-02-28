@@ -31,7 +31,10 @@ if __name__ == "__main__":
     done_parser.set_defaults(func=done_handler.handle)
 
     show_parser = sub_parser.add_parser('show', help='show taskList')
+    show_parser.add_argument("-a", "--all", action='store_true')
+    show_parser.add_argument("-d", "--done", action='store_true')
     show_parser.set_defaults(func=show_handler.handle)
+    show_parser.add_argument("filter", nargs="?", default='')
 
     args = parser.parse_args()
     print(args.func(args))
