@@ -2,6 +2,7 @@ import argparse
 from task import add_handler
 from task import done_handler
 from task import show_handler
+from task import update_handler
 from datetime import datetime
 
 
@@ -35,6 +36,23 @@ if __name__ == "__main__":
     show_parser.add_argument("-d", "--done", action='store_true')
     show_parser.set_defaults(func=show_handler.handle)
     show_parser.add_argument("filter", nargs="?", default='')
+
+    find_parser = sub_parser.add_parser('find', help='display only match to the conditions.')
+    find_parser.add_argument('-t', '--taskName', type=str)
+    find_parser.add_argument('-p', '--project', type=str, default='')
+    find_parser.add_argument('-c', '--context', type=str, default='')
+    find_parser.add_argument('-s', '--startDay', type=validate_date, help='date input format %%Y/%%m/%%d %%H:%%M:%%S')
+    find_parser.add_argument('-e', '--endDay', type=validate_date, help='date input format %%Y/%%m/%%d %%H:%%M:%%S')
+    find_parser.add_argument('-i', '--importance', type=str, default='C', choices=['A', 'B', 'C', 'D', 'E'])
+
+    update_parser = sub_parser.add_parser('update', help='Update the task. The target is specified the id and option.')
+    update_parser.add_argument('-t', '--taskName', type=str)
+    update_parser.add_argument('-p', '--project', type=str, default='')
+    update_parser.add_argument('-c', '--context', type=str, default='')
+    update_parser.add_argument('-s', '--startDay', type=validate_date, help='date input format %%Y/%%m/%%d %%H:%%M:%%S')
+    update_parser.add_argument('-e', '--endDay', type=validate_date, help='date input format %%Y/%%m/%%d %%H:%%M:%%S')
+    update_parser.add_argument('-i', '--importance', type=str, default='C', choices=['A', 'B', 'C', 'D', 'E'])
+    update_parser.set_defaults(func=update_handler.handle)
 
     args = parser.parse_args()
     print(args.func(args))
