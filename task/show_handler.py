@@ -17,9 +17,9 @@ def handle(args):
 
 
 def draw_table(result_set):
-    header = [list(result_set[0].keys())]
+    header = ['id', 'taskName', 'state', 'startDt', 'endDt', 'createAt', 'updateAt', 'project', 'tag', 'priority']
     contents = [list(item.values()) for item in result_set]
-    table = prettytable.PrettyTable(header[0])
+    table = prettytable.PrettyTable(header)
     for item in contents:
         table.add_row(item)
     return table
