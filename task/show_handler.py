@@ -17,7 +17,11 @@ def handle(args):
 
 
 def draw_table(result_set):
-    header = ['id', 'taskName', 'state', 'startDt', 'endDt', 'createAt', 'updateAt', 'project', 'tag', 'priority']
+    if result_set:
+        header = list(result_set[0].keys())
+    else:
+        header = ['id', 'taskName', 'state', 'startDt', 'endDt',
+                  'createAt', 'updateAt', 'project', 'group', 'priority', 'tag']
     contents = [list(item.values()) for item in result_set]
     table = prettytable.PrettyTable(header)
     for item in contents:
