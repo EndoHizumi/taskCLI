@@ -26,6 +26,7 @@ if __name__ == "__main__":
     add_parser.add_argument('-e', '--endDay', type=validate_date, help='date input format %%Y/%%m/%%d %%H:%%M:%%S')
     add_parser.add_argument('-i', '--importance', type=str, default='C', choices=['A', 'B', 'C', 'D', 'E'])
     add_parser.add_argument('-d', '--done', action='store_true')
+    add_parser.add_argument('-g', '--group', type=str, default='')
     add_parser.set_defaults(func=add_handler.handle)
 
     done_parser = sub_parser.add_parser('done', help='Done to task')

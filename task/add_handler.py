@@ -3,7 +3,7 @@ from datetime import datetime
 
 
 def handle(args):
-    start_date = args.startDay if args.startDay else datetime.now().strftime("%Y/%m/%d %H:%M:%S")
+    start_date = args.startDay if args.startDay else None
     done = 1 if args.done else 0
     end_date = datetime.now().strftime("%Y/%m/%d %H:%M:%S") if args.done else None
     db = dataset.connect("sqlite:///taskList.sqlite")
@@ -18,9 +18,10 @@ def handle(args):
             'createAt': datetime.now().strftime("%Y/%m/%d %H:%M:%S"),
             'updateAt': datetime.now().strftime("%Y/%m/%d %H:%M:%S"),
             'project': args.project,
+            'group': args.group,
             'tag': args.context,
             'state': done,
-            'priority': args.importance
+            'priority': args.importance,
         }
     )
     return task_list.find_one(id=length)
