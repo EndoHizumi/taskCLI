@@ -3,6 +3,7 @@ from task import add_handler
 from task import done_handler
 from task import show_handler
 from task import update_handler
+from task import start_handler
 from datetime import datetime
 
 
@@ -55,6 +56,10 @@ if __name__ == "__main__":
     update_parser.add_argument('-e', '--endDay', type=validate_date, help='date input format %%Y/%%m/%%d %%H:%%M:%%S')
     update_parser.add_argument('-i', '--importance', type=str, default='C', choices=['A', 'B', 'C', 'D', 'E'])
     update_parser.set_defaults(func=update_handler.handle)
+
+    start_parser = sub_parser.add_parser('start')
+    start_parser.add_argument('id')
+    start_parser.set_defaults(func=start_handler.handle)
 
     args = parser.parse_args()
     print(args.func(args))
