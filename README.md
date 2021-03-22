@@ -6,6 +6,8 @@ task is Todo List manager on CLI
 
 ## setup
 
+require python 3.8 or later
+
 ```
 $ pip install -r requirements.txt
 ```
