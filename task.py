@@ -4,6 +4,7 @@ from task import done_handler
 from task import show_handler
 from task import update_handler
 from task import start_handler
+from task import delete_handler
 from datetime import datetime
 
 
@@ -60,6 +61,10 @@ if __name__ == "__main__":
     start_parser = sub_parser.add_parser('start')
     start_parser.add_argument('id')
     start_parser.set_defaults(func=start_handler.handle)
+
+    delete_parser = sub_parser.add_parser('delete')
+    delete_parser.add_argument('id')
+    delete_parser.set_defaults(func=delete_handler.handle)
 
     args = parser.parse_args()
     print(args.func(args))
