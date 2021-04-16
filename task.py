@@ -14,7 +14,7 @@ def validate_date(arg_date):
         raise argparse.ArgumentTypeError(msg)
 
 
-if __name__ == "__main__":
+def get_arg_parser():
     parser = argparse.ArgumentParser()
     sub_parser = parser.add_subparsers()
 
@@ -54,5 +54,9 @@ if __name__ == "__main__":
     update_parser.add_argument('-i', '--importance', type=str, default='C', choices=['A', 'B', 'C', 'D', 'E'])
     update_parser.set_defaults(func=update_handler.handle)
 
+    return parser
+
+if __name__ == "__main__":
+    parser = get_arg_parser()
     args = parser.parse_args()
     print(args.func(args))
