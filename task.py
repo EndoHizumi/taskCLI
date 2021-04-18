@@ -49,12 +49,13 @@ def get_arg_parser():
     find_parser.add_argument('-i', '--importance', type=str, default='C', choices=['A', 'B', 'C', 'D', 'E'])
 
     update_parser = sub_parser.add_parser('update', help='Update the task. The target is specified the id and option.')
+    update_parser.add_argument('id')
     update_parser.add_argument('-t', '--taskName', type=str)
     update_parser.add_argument('-p', '--project', type=str, default='')
     update_parser.add_argument('-c', '--context', type=str, default='')
     update_parser.add_argument('-s', '--startDay', type=validate_date, help='date input format %%Y/%%m/%%d %%H:%%M:%%S')
     update_parser.add_argument('-e', '--endDay', type=validate_date, help='date input format %%Y/%%m/%%d %%H:%%M:%%S')
-    update_parser.add_argument('-i', '--importance', type=str, default='C', choices=['A', 'B', 'C', 'D', 'E'])
+    update_parser.add_argument('-i', '--importance', type=str, default='', choices=['A', 'B', 'C', 'D', 'E'])
     update_parser.set_defaults(func=update_handler.handle)
 
     start_parser = sub_parser.add_parser('start')
