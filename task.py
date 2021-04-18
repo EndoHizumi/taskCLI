@@ -1,10 +1,8 @@
 import argparse
-from task import add_handler
-from task import done_handler
-from task import show_handler
-from task import update_handler
-from task import start_handler
 from datetime import datetime
+
+from task import (add_handler, done_handler, remove_handler, show_handler,
+                  start_handler, update_handler)
 
 
 def validate_date(arg_date):
@@ -61,6 +59,10 @@ def get_arg_parser():
     start_parser = sub_parser.add_parser('start')
     start_parser.add_argument('id')
     start_parser.set_defaults(func=start_handler.handle)
+
+    remove_parser = sub_parser.add_parser('remove')
+    remove_parser.add_argument('id')
+    remove_parser.set_defaults(func=remove_handler.handle)
     return parser
 
 
