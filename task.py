@@ -4,8 +4,12 @@ from task import done_handler
 from task import show_handler
 from task import update_handler
 from task import start_handler
-from task import delete_handler
+from task import remove_handler
+from task import find_handler
 from datetime import datetime
+
+from task import (add_handler, done_handler, remove_handler, show_handler,
+                  start_handler, update_handler)
 
 
 def validate_date(arg_date):
@@ -16,7 +20,7 @@ def validate_date(arg_date):
         raise argparse.ArgumentTypeError(msg)
 
 
-if __name__ == "__main__":
+def get_arg_parser():
     parser = argparse.ArgumentParser()
     sub_parser = parser.add_subparsers()
 
@@ -50,21 +54,26 @@ if __name__ == "__main__":
     find_parser.add_argument('-i', '--importance', type=str, default='C', choices=['A', 'B', 'C', 'D', 'E'])
 
     update_parser = sub_parser.add_parser('update', help='Update the task. The target is specified the id and option.')
+    update_parser.add_argument('id')
     update_parser.add_argument('-t', '--taskName', type=str)
     update_parser.add_argument('-p', '--project', type=str, default='')
     update_parser.add_argument('-c', '--context', type=str, default='')
     update_parser.add_argument('-s', '--startDay', type=validate_date, help='date input format %%Y/%%m/%%d %%H:%%M:%%S')
     update_parser.add_argument('-e', '--endDay', type=validate_date, help='date input format %%Y/%%m/%%d %%H:%%M:%%S')
-    update_parser.add_argument('-i', '--importance', type=str, default='C', choices=['A', 'B', 'C', 'D', 'E'])
+    update_parser.add_argument('-i', '--importance', type=str, default='', choices=['A', 'B', 'C', 'D', 'E'])
     update_parser.set_defaults(func=update_handler.handle)
 
     start_parser = sub_parser.add_parser('start')
     start_parser.add_argument('id')
     start_parser.set_defaults(func=start_handler.handle)
 
-    delete_parser = sub_parser.add_parser('delete')
-    delete_parser.add_argument('id')
-    delete_parser.set_defaults(func=delete_handler.handle)
+    remove_parser = sub_parser.add_parser('remove')
+    remove_parser.add_argument('id')
+    remove_parser.set_defaults(func=remove_handler.handle)
+    return parser
 
+
+if __name__ == "__main__":
+    parser = get_arg_parser()
     args = parser.parse_args()
     print(args.func(args))

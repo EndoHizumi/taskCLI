@@ -2,14 +2,14 @@
 
 ```bash
 update
-    [ID] <String>
-    [--taskName] <String>
-    [--startDate] <String>
-    [--endDate] <String>
-    [--project] <String>
-    [--context] <String>
-    [--done] <String>
-    [--priority] <String>
+    ID <String>
+    [-t ,--taskName] <String>
+    [-s, --startDay] <String>
+    [-e, --endDay] <String>
+    [-p, --project] <String>
+    [-c, --context] <String>
+    [-d, --done] <String>
+    [-i, --importance] <String>
 
 ```
 
