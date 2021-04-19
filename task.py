@@ -1,15 +1,8 @@
 import argparse
-from task import add_handler
-from task import done_handler
-from task import show_handler
-from task import update_handler
-from task import start_handler
-from task import remove_handler
-from task import find_handler
 from datetime import datetime
 
 from task import (add_handler, done_handler, remove_handler, show_handler,
-                  start_handler, update_handler)
+                  start_handler, update_handler, find_handler)
 
 
 def validate_date(arg_date):
@@ -45,14 +38,6 @@ def get_arg_parser():
     show_parser.set_defaults(func=show_handler.handle)
     show_parser.add_argument("filter", nargs="?", default='')
 
-    find_parser = sub_parser.add_parser('find', help='display only match to the conditions.')
-    find_parser.add_argument('-t', '--taskName', type=str)
-    find_parser.add_argument('-p', '--project', type=str, default='')
-    find_parser.add_argument('-c', '--context', type=str, default='')
-    find_parser.add_argument('-s', '--startDay', type=validate_date, help='date input format %%Y/%%m/%%d %%H:%%M:%%S')
-    find_parser.add_argument('-e', '--endDay', type=validate_date, help='date input format %%Y/%%m/%%d %%H:%%M:%%S')
-    find_parser.add_argument('-i', '--importance', type=str, default='C', choices=['A', 'B', 'C', 'D', 'E'])
-
     update_parser = sub_parser.add_parser('update', help='Update the task. The target is specified the id and option.')
     update_parser.add_argument('id')
     update_parser.add_argument('-t', '--taskName', type=str)
@@ -70,6 +55,16 @@ def get_arg_parser():
     remove_parser = sub_parser.add_parser('remove')
     remove_parser.add_argument('id')
     remove_parser.set_defaults(func=remove_handler.handle)
+
+    find_parser = sub_parser.add_parser('find', help='display only match to the conditions.')
+    find_parser.add_argument('-t', '--taskName', type=str)
+    find_parser.add_argument('-p', '--project', type=str)
+    find_parser.add_argument('-c', '--context', type=str)
+    find_parser.add_argument('-s', '--startDay', type=validate_date, help='date input format %%Y/%%m/%%d %%H:%%M:%%S')
+    find_parser.add_argument('-e', '--endDay', type=validate_date, help='date input format %%Y/%%m/%%d %%H:%%M:%%S')
+    find_parser.add_argument('-i', '--importance', type=str, choices=['A', 'B', 'C', 'D', 'E'])
+    find_parser.set_defaults(func=find_handler.handle)
+
     return parser
 
 
