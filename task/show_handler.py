@@ -1,4 +1,3 @@
-import prettytable
 import dataset
 
 
@@ -13,17 +12,4 @@ def handle(args):
     else:
         result_set = task_list.find(state=[None, 0])
 
-    return draw_table(list(result_set))
-
-
-def draw_table(result_set):
-    if result_set:
-        header = list(result_set[0].keys())
-    else:
-        header = ['id', 'taskName', 'state', 'startDt', 'endDt',
-                  'createAt', 'updateAt', 'project', 'group', 'priority', 'tag']
-    contents = [list(item.values()) for item in result_set]
-    table = prettytable.PrettyTable(header)
-    for item in contents:
-        table.add_row(item)
-    return table
+    return list(result_set)
