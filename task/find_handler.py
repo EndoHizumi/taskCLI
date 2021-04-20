@@ -1,5 +1,5 @@
 import dataset
-import datetime
+
 
 def handle(args):
     db = dataset.connect("sqlite:///taskList.sqlite")
@@ -19,7 +19,7 @@ def handle(args):
         if item in valid_argment and args_dict.get(item) is not None:
             key = replace_key_map.get(item, item)
             data[key] = args_dict.get(item)
-    print(data)
+
     result_set = task_list.find(**data)
 
     return list(result_set)
