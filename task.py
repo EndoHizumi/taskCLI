@@ -79,7 +79,13 @@ def get_arg_parser():
     start_parser.set_defaults(func=start_handler.handle)
 
     remove_parser = sub_parser.add_parser('remove')
-    remove_parser.add_argument('id')
+    remove_parser.add_argument('id', nargs='?')
+    remove_parser.add_argument('-t', '--taskName', type=str)
+    remove_parser.add_argument('-p', '--project', type=str)
+    remove_parser.add_argument('-c', '--context', type=str)
+    remove_parser.add_argument('-s', '--startDay', type=validate_date, help='date input format %%Y/%%m/%%d %%H:%%M:%%S')
+    remove_parser.add_argument('-e', '--endDay', type=validate_date, help='date input format %%Y/%%m/%%d %%H:%%M:%%S')
+    remove_parser.add_argument('-i', '--importance', type=str, choices=['A', 'B', 'C', 'D', 'E'])
     remove_parser.set_defaults(func=remove_handler.handle)
 
     find_parser = sub_parser.add_parser('find', help='display only match to the conditions.')
