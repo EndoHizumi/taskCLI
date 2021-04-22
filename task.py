@@ -2,7 +2,7 @@ import argparse
 import prettytable
 from datetime import datetime
 
-from task import (add_handler, done_handler, remove_handler, show_handler, start_handler, update_handler, find_handler)
+from task import (add_handler, done_handler, remove_handler, show_handler, start_handler, update_handler, find_handler, state_handler)
 
 
 def validate_date(arg_date):
@@ -78,7 +78,7 @@ def get_arg_parser():
     start_parser.add_argument('id')
     start_parser.set_defaults(func=start_handler.handle)
 
-    remove_parser = sub_parser.add_parser('remove')
+    remove_parser = sub_parser.add_parser('remove', help='remove the specified task. The target can multiple specify from search result.')
     remove_parser.add_argument('id', nargs='?')
     remove_parser.add_argument('-t', '--taskName', type=str)
     remove_parser.add_argument('-p', '--project', type=str)
@@ -96,6 +96,15 @@ def get_arg_parser():
     find_parser.add_argument('-e', '--endDay', type=validate_date, help='date input format %%Y/%%m/%%d %%H:%%M:%%S')
     find_parser.add_argument('-i', '--importance', type=str, choices=['A', 'B', 'C', 'D', 'E'])
     find_parser.set_defaults(func=find_handler.handle)
+    
+    state_parser = sub_parser.add_parser('state', help='')
+    state_parser.add_argument('-t', '--taskName', type=str)
+    state_parser.add_argument('-p', '--project', type=str)
+    state_parser.add_argument('-c', '--context', type=str)
+    state_parser.add_argument('-s', '--startDay', type=validate_date, help='date input format %%Y/%%m/%%d %%H:%%M:%%S')
+    state_parser.add_argument('-e', '--endDay', type=validate_date, help='date input format %%Y/%%m/%%d %%H:%%M:%%S')
+    state_parser.add_argument('-i', '--importance', type=str, choices=['A', 'B', 'C', 'D', 'E'])
+    state_parser.set_defaults(func=find_handler.handle)
 
     return parser
 
