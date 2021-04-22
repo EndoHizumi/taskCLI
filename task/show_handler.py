@@ -19,5 +19,9 @@ def handle(args):
             result_set = [item for item in find.handle(args) if item['state'] == 1]
         else:
             result_set = [item for item in find.handle(args) if item['state'] == 0]
+    result: list = []
+    for item in result_set:
+        del item['createAt'], item['updateAt']
+        result.append(item)
 
-    return list(result_set)
+    return list(result)
