@@ -7,7 +7,7 @@ def handle(args):
     done = 1 if args.done else 0
     end_date = datetime.now().strftime("%Y/%m/%d %H:%M:%S") if args.done else None
     db = dataset.connect("sqlite:///taskList.sqlite")
-    context = args.context if args.context else 'todo'
+    context = args.tag if args.tag else 'todo'
     task_list = db["taskList"]
     length = len(task_list)
     task_list.insert(

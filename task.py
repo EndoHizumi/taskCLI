@@ -2,7 +2,8 @@ import argparse
 import prettytable
 from datetime import datetime
 
-from task import (add_handler, done_handler, remove_handler, show_handler, start_handler, update_handler, find_handler)
+from task import (add_handler, done_handler, remove_handler, show_handler,
+                  start_handler, update_handler, find_handler, reset_handler)
 
 
 def validate_date(arg_date):
@@ -39,9 +40,9 @@ def get_arg_parser():
 
     add_parser = sub_parser.add_parser(
         'add', help='Insert task to TaskList. If priority is omitted, priority medium is set.')
-    add_parser.add_argument('-t', '--taskName', type=str, required=True)
+    add_parser.add_argument('-n', '--taskName', type=str, required=True)
     add_parser.add_argument('-p', '--project', type=str, default='')
-    add_parser.add_argument('-c', '--context', type=str, default='')
+    add_parser.add_argument('-t', '--tag', type=str, default='')
     add_parser.add_argument('-s', '--startDay', type=validate_date, help='date input format %%Y/%%m/%%d %%H:%%M:%%S')
     add_parser.add_argument('-e', '--endDay', type=validate_date, help='date input format %%Y/%%m/%%d %%H:%%M:%%S')
     add_parser.add_argument('-i', '--importance', type=str, default='C', choices=['A', 'B', 'C', 'D', 'E'])
@@ -56,9 +57,9 @@ def get_arg_parser():
     show_parser = sub_parser.add_parser('show', help='show taskList')
     show_parser.add_argument("-a", "--all", action='store_true')
     show_parser.add_argument("-d", "--doneOnly", action='store_true')
-    show_parser.add_argument('-t', '--taskName', type=str)
+    show_parser.add_argument('-n', '--taskName', type=str)
     show_parser.add_argument('-p', '--project', type=str)
-    show_parser.add_argument('-c', '--context', type=str)
+    show_parser.add_argument('-t', '--tag', type=str)
     show_parser.add_argument('-s', '--startDay', type=validate_date, help='date input format %%Y/%%m/%%d %%H:%%M:%%S')
     show_parser.add_argument('-e', '--endDay', type=validate_date, help='date input format %%Y/%%m/%%d %%H:%%M:%%S')
     show_parser.add_argument('-i', '--importance', type=str, choices=['A', 'B', 'C', 'D', 'E'])
@@ -66,9 +67,9 @@ def get_arg_parser():
 
     update_parser = sub_parser.add_parser('update', help='Update the task. The target is specified the id and option.')
     update_parser.add_argument('id')
-    update_parser.add_argument('-t', '--taskName', type=str)
+    update_parser.add_argument('-n', '--taskName', type=str)
     update_parser.add_argument('-p', '--project', type=str)
-    update_parser.add_argument('-c', '--context', type=str)
+    update_parser.add_argument('-t', '--tag', type=str)
     update_parser.add_argument('-s', '--startDay', type=validate_date, help='date input format %%Y/%%m/%%d %%H:%%M:%%S')
     update_parser.add_argument('-e', '--endDay', type=validate_date, help='date input format %%Y/%%m/%%d %%H:%%M:%%S')
     update_parser.add_argument('-i', '--importance', type=str, choices=['A', 'B', 'C', 'D', 'E'])
@@ -78,24 +79,30 @@ def get_arg_parser():
     start_parser.add_argument('id')
     start_parser.set_defaults(func=start_handler.handle)
 
-    remove_parser = sub_parser.add_parser('remove')
+    remove_parser = sub_parser.add_parser(
+        'remove', help='remove the specified task. The target can multiple specify from search result.')
     remove_parser.add_argument('id', nargs='?')
-    remove_parser.add_argument('-t', '--taskName', type=str)
+    remove_parser.add_argument('-n', '--taskName', type=str)
     remove_parser.add_argument('-p', '--project', type=str)
-    remove_parser.add_argument('-c', '--context', type=str)
+    remove_parser.add_argument('-t', '--tag', type=str)
     remove_parser.add_argument('-s', '--startDay', type=validate_date, help='date input format %%Y/%%m/%%d %%H:%%M:%%S')
     remove_parser.add_argument('-e', '--endDay', type=validate_date, help='date input format %%Y/%%m/%%d %%H:%%M:%%S')
     remove_parser.add_argument('-i', '--importance', type=str, choices=['A', 'B', 'C', 'D', 'E'])
     remove_parser.set_defaults(func=remove_handler.handle)
 
     find_parser = sub_parser.add_parser('find', help='display only match to the conditions.')
-    find_parser.add_argument('-t', '--taskName', type=str)
+    find_parser.add_argument('-n', '--taskName', type=str)
     find_parser.add_argument('-p', '--project', type=str)
-    find_parser.add_argument('-c', '--context', type=str)
+    find_parser.add_argument('-t', '--tag', type=str)
     find_parser.add_argument('-s', '--startDay', type=validate_date, help='date input format %%Y/%%m/%%d %%H:%%M:%%S')
     find_parser.add_argument('-e', '--endDay', type=validate_date, help='date input format %%Y/%%m/%%d %%H:%%M:%%S')
     find_parser.add_argument('-i', '--importance', type=str, choices=['A', 'B', 'C', 'D', 'E'])
     find_parser.set_defaults(func=find_handler.handle)
+
+    reset_parser = sub_parser.add_parser(
+        'reset', help='Return the specified task to the todo state')
+    reset_parser.add_argument('id', nargs='?')
+    reset_parser.set_defaults(func=reset_handler.handle)
 
     return parser
 
