@@ -9,10 +9,10 @@ def handle(args):
     db = dataset.connect("sqlite:///taskList.sqlite")
     context = args.tag if args.tag else 'todo'
     task_list = db["taskList"]
-    length = len(task_list)
+    id_number = list(task_list.find())[-1]['id'] + 1
     task_list.insert(
         {
-            'id': length,
+            'id': id_number,
             'taskName': args.taskName,
             'startDt': start_date,
             'endDt': end_date,
@@ -25,4 +25,4 @@ def handle(args):
             'priority': args.importance,
         }
     )
-    return task_list.find_one(id=length)
+    return task_list.find_one(id=id_number)
